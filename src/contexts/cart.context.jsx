@@ -17,15 +17,22 @@ const removeCartItem = (cartItems, cartItemToRemove ) =>{
     // find if cartItems contains ProducToAdd
     const existingItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id );
 
-    // if found, increment quantity
+    // if found, Decrement quantity
     if(existingItem.quantity === 1){
         return cartItems.filter(cartItem=>cartItem.id !== existingItem.id)
     }
 
     // return new array with modified cartItems/ reduced cart items
     return cartItems.map((cartItem)=> cartItem.id === cartItemToRemove.id ? { ...cartItem, quantity:cartItem.quantity - 1 } : cartItem);
+}
 
-
+const clearCartItem = (cartItems, cartItemToClear) =>{
+    const existingItem = cartItems.find((cartItem) => cartItem.id === cartItemToClear.id);
+    
+    if (existingItem){
+        return cartItems.filter(cartItem=>cartItem.id !== existingItem.id)
+    }
+    return 
 }
 
 
@@ -37,6 +44,7 @@ export const CartContext = createContext({
     cartItems:[],
     addItemToCart: () =>{},
     removeItemFromCart: () =>{},
+    clearItemFromCart: () =>{},
     cartCount: 0
 })
 
@@ -58,7 +66,11 @@ export const CartProvider = ({children}) => {
         setCartItems(removeCartItem(cartItems, cartItemToRemove));
     }
 
-    const value = {isCartOpen, setIsCartOpen, addItemToCart, removeItemFromCart, cartItems, cartCount}; 
+    const clearItemFromCart = (cartItemToClear)=>{
+        setCartItems(clearCartItem(cartItems, cartItemToClear));
+    }
+
+    const value = {isCartOpen, setIsCartOpen, addItemToCart, removeItemFromCart, clearItemFromCart, cartItems, cartCount}; 
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
