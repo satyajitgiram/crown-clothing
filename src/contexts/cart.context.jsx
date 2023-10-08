@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 const addCartItem = (cartItems, productToAdd ) =>{
     // find if cartItems contains ProducToAdd
@@ -6,10 +7,12 @@ const addCartItem = (cartItems, productToAdd ) =>{
 
     // if found, increment quantity
     if(existingItem){
+        toast.success("Item Added to cart")
         return cartItems.map((cartItem)=> cartItem.id === productToAdd.id ? { ...cartItem, quantity:cartItem.quantity +1 } : cartItem);
     }
 
     // return new array with modified cartItems/ new cart items
+    toast.success("Item Added to cart")
     return [...cartItems, {...productToAdd, quantity:1}];
 }
 
@@ -19,10 +22,12 @@ const removeCartItem = (cartItems, cartItemToRemove ) =>{
 
     // if found, Decrement quantity
     if(existingItem.quantity === 1){
+        toast.success("Item Removed from cart")
         return cartItems.filter(cartItem=>cartItem.id !== existingItem.id)
     }
 
     // return new array with modified cartItems/ reduced cart items
+    toast.success("Item Removed from cart")
     return cartItems.map((cartItem)=> cartItem.id === cartItemToRemove.id ? { ...cartItem, quantity:cartItem.quantity - 1 } : cartItem);
 }
 

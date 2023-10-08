@@ -6,8 +6,9 @@ import {
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
+import toast, { Toaster } from 'react-hot-toast';
 
-import "./sign-in-form.styles.scss";
+import {SignInContainer, ButtonsContainer}  from "./sign-in-form.styles.jsx";
 
 const defaultFormFields = {
   email: "",
@@ -41,14 +42,16 @@ const SignInForm = () => {
         email,
         password
       );
+      toast.success("Logged in successfully")
       resetFormfields();
+
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
-          alert("Incorrect Password for email");
+          toast.error("Incorrect Password for email")
           break;
         case "auth/user-not-found":
-          alert("no user assosiated with this email");
+          toast.error("No user assosiated with this email")
           break;
         default:
           console.log(error);
@@ -58,7 +61,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign In with your Email and Password</span>
       <form onSubmit={handleSubmit}>
@@ -79,15 +82,16 @@ const SignInForm = () => {
           value={password}
           onChange={handleChange}
         />
-
-        <div className="buttons-container">
+        
+        <ButtonsContainer>
           <Button type="submit">Sign In</Button>
           <Button type="button" buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>
             Google Sign In{" "}
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+      <Toaster />
+    </SignInContainer>
   );
 };
 

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
-import './sign-up-form.styles.scss'
+import {SignUpContainer} from './sign-up-form.styles.jsx'
+import toast, { Toaster } from 'react-hot-toast';
 
 const defaultFormFields = {
     displayName:'',
@@ -15,6 +16,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
     const [formField, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formField;
+    const errorNotify = () => toast.error("Error");
 
     const handleChange = (event) =>{
         const {name, value} = event.target;
@@ -29,20 +31,21 @@ const SignUpForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log(password, confirmPassword)
         if (password !== confirmPassword){
-            alert('Password don not match')
+            toast.error("Password is not matching")
+            return ;
         }
 
         try {
             const {user} = await createAuthUserWithEmailAndPassword(email, password);
             await createUserDocumentFromAuth(user, {displayName})
-            alert('User Created Successfully')
+            toast.success("User Created Successfully")
             resetFormfields();
-
             
         } catch (error) {
             if(error.code === 'auth/email-already-in-use'){
-                alert('Cannnot create user, email already in use')
+                toast.error("Cannnot create user, email already in use")
             } else {
                 console.log("user creation error", error)
             }
@@ -52,7 +55,7 @@ const SignUpForm = () => {
     }
 
     return (
-        <div className="sign-up-container">
+        <SignUpContainer>
             <h2>Don't have an account?</h2>
             <span>Sign Up with your Email and Password</span>
             <form onSubmit={handleSubmit}>
@@ -90,7 +93,8 @@ const SignUpForm = () => {
                 />
                 <Button type="submit">Sign Up</Button>
             </form>
-        </div>
+            <Toaster />
+        </SignUpContainer>
     );
 };
 

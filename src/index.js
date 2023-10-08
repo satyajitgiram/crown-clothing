@@ -7,6 +7,7 @@ import { CategoriesProvider } from "./contexts/categories.context";
 import { CartProvider } from "./contexts/cart.context";
 
 import "./index.scss";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,6 +17,7 @@ root.render(
         <CategoriesProvider>
           <CartProvider>
             <App />
+            <Toaster />
           </CartProvider>
         </CategoriesProvider>
       </UserProvider>
