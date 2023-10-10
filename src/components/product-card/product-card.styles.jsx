@@ -21,6 +21,7 @@ export const ProductCardContainer = styled.div`
 
   button {
     width: 80%;
+    border-radius: 7px;
     opacity: 0.7;
     position: absolute;
     top: 255px;

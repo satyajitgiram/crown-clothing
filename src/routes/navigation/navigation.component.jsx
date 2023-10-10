@@ -7,7 +7,7 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
 import {NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles.jsx';
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
+import CrwnLogo from '../../assets/path2fashion-logo.png';
 
 const Navigation = () =>{
 
@@ -19,7 +19,7 @@ const Navigation = () =>{
         <Fragment>
             <NavigationContainer>
                 <LogoContainer to="/">
-                    <CrwnLogo className="logo"/>
+                    <img src={CrwnLogo} className="logo"/>
                 </LogoContainer>
                 <NavLinks>
                     <NavLink to="/shop">

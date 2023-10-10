@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const BaseButton = styled.button`
     min-width: 165px;
+    border-radius:5px;
     width: auto;
     height: 50px;
     letter-spacing: 0.5px;  
@@ -11,7 +12,6 @@ export const BaseButton = styled.button`
     background-color: black;
     color: white;
     text-transform: uppercase;
-    font-family: 'Open Sans Condensed';
     font-weight: bolder;
     border: none;
     cursor: pointer;
